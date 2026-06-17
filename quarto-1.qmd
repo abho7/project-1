@@ -4,3 +4,34 @@ author: "Abhineeth Duddela"
 format: html
 ---
 
+```{r}
+#| message: false
+#| echo: false
+library(tidyverse)
+library(palmerpenguins)
+```
+
+```{r}
+#| echo: false
+penguins |>
+  filter(!is.na(bill_length_mm), !is.na(bill_depth_mm)) |>
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+  geom_point(size = 2.5, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.8) +
+  scale_color_manual(values = c("Adelie" = "#FF8C00", "Chinstrap" = "#A034F0", "Gentoo" = "#159090")) +
+  labs(
+    title = "Bill Dimensions Across Penguin Species",
+    subtitle = "Adelie, Chinstrap, and Gentoo penguins from Palmer Station, Antarctica",
+    x = "Bill Length (mm)",
+    y = "Bill Depth (mm)",
+    color = "Species",
+    caption = "Data: palmerpenguins package"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16),
+    plot.subtitle = element_text(color = "gray40"),
+    legend.position = "bottom",
+    panel.grid.minor = element_blank()
+  )
+```
